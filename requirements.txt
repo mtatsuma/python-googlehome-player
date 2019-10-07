@@ -1,0 +1,17 @@
+beautifulsoup4==4.8.2
+casttube==0.2.0
+certifi==2019.11.28
+chardet==3.0.4
+Click==7.0
+gTTS==2.1.0
+gTTS-token==1.1.3
+idna==2.8
+ifaddr==0.1.6
+pkg-resources==0.0.0
+protobuf==3.11.2
+PyChromecast==4.1.0
+requests==2.22.0
+six==1.13.0
+soupsieve==1.9.5
+urllib3==1.25.7
+zeroconf==0.24.4
