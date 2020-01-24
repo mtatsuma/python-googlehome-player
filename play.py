@@ -48,15 +48,18 @@ def prepare_speaker():
         speaker = get_speaker(name=name_or_ip)
     except Exception as e:
         print('Error: %s' % (str(e)))
+        raise Exception
     return speaker, lang
 
 def main():
-    speaker, lang = prepare_speaker()
     while True:
+        try:
+            speaker, lang = prepare_speaker()
+        except Exception:
+            continue
         if check_speaker(speaker, lang):
             break
-        else:
-           speaker, lang = prepare_speaker()
+        print('Failed to setup. Try again!')
 
     print('Start typing ...')
     text = ''
