@@ -1,16 +1,19 @@
 import socket
+import time
 import pychromecast
 from gtts import gTTS
 
-def get_speaker(ip=None, name=None):
-    if ip:
-        return pychromecast.Chromecast(str(ip))
-    else:
-        speakers = pychromecast.get_chromecasts()
-        if name:
-            return next(s for s in speakers if s.device.friendly_name == name)
-        else:
-            return next(speakers)
+def get_speaker(ip_addr=None, name=None):
+    if ip_addr:
+        return pychromecast.Chromecast(str(ip_addr))
+
+    speakers = pychromecast.get_chromecasts()
+    if len(speakers) == 0:
+        print('No devices are found')
+        raise Exception
+    if name:
+        return next(s for s in speakers if s.device.friendly_name == name)
+    return next(speakers)
 
 def speak(text, speaker, lang='en'):
     try:
@@ -23,8 +26,8 @@ def speak(text, speaker, lang='en'):
         speaker.wait()
         speaker.media_controller.play_media(urls[0], 'audit/mp3')
         speaker.media_controller.block_until_active()
-    except Exception as e:
-        print(str(e))
+    except Exception as error:
+        print(str(error))
         raise Exception
 
 def check_speaker(speaker, lang):
@@ -32,8 +35,8 @@ def check_speaker(speaker, lang):
         speak(text='OK', speaker=speaker, lang=lang)
         print('You are ready to speak!')
         return True
-    except Exception as e:
-        print('Try an another ip or name: %s' % (str(e)))
+    except Exception as error:
+        print('Try an another ip or name: %s' % (str(error)))
         return False
 
 def prepare_speaker():
@@ -43,11 +46,11 @@ def prepare_speaker():
     name_or_ip = input()
     try:
         socket.inet_aton(name_or_ip)
-        speaker = get_speaker(ip=name_or_ip)
+        speaker = get_speaker(ip_addr=name_or_ip)
     except socket.error:
         speaker = get_speaker(name=name_or_ip)
-    except Exception as e:
-        print('Error: %s' % (str(e)))
+    except Exception as error:
+        print('Error: %s' % (str(error)))
         raise Exception
     return speaker, lang
 
