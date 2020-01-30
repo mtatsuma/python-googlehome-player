@@ -19,7 +19,7 @@ $ cd python-googlehome-player
 $ pip install -r requirements.txt
 ```
 
-or `pipenv` automatically install packages in requirements.txt
+or using `pipenv`.
 
 ```
 $ pipenv --python 3.7
